@@ -19,26 +19,21 @@
   <meta name="author" content="Yihang Tao">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Deploy BEVFormer on Ubuntu 18.04&#x2F;22.04  This is a 100% successful instruction for deploying BEVFormer&#x2F;ActFormer on Ubuntu 18.04&#x2F;22.04.  IntroductionFor those who wanna do experiments wi">
+    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 <meta property="og:type" content="article">
-<meta property="og:title" content="100% successful deployment of BEVFormer on Ubuntu 18.04&#x2F;20.04 Server">
-<meta property="og:url" content="http://yihangtao.github.io/blog/2024/08/09/bevformer/index.html">
+<meta property="og:title" content="Hello World">
+<meta property="og:url" content="http://yihangtao.github.io/blog/2024/08/09/hello-world/index.html">
 <meta property="og:site_name" content="Yihang Tao">
-<meta property="og:description" content="Deploy BEVFormer on Ubuntu 18.04&#x2F;22.04  This is a 100% successful instruction for deploying BEVFormer&#x2F;ActFormer on Ubuntu 18.04&#x2F;22.04.  IntroductionFor those who wanna do experiments wi">
+<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yihangtao.github.io/blog/images/image.png">
-<meta property="og:image" content="http://yihangtao.github.io/blog/images/image-1.png">
-<meta property="og:image" content="http://yihangtao.github.io/blog/images/image-2.png">
-<meta property="article:published_time" content="2024-08-09T10:46:54.000Z">
-<meta property="article:modified_time" content="2024-08-09T12:57:36.790Z">
+<meta property="article:published_time" content="2024-08-09T13:10:49.329Z">
+<meta property="article:modified_time" content="2024-08-09T08:27:50.000Z">
 <meta property="article:author" content="Yihang Tao">
-<meta property="article:tag" content="Code">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://yihangtao.github.io/blog/images/image.png">
   
   
   
-  <title>100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server - Yihang Tao</title>
+  <title>Hello World - Yihang Tao</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +212,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server"></span>
+            <span id="subtitle" data-typed-text="Hello World"></span>
           
         </div>
 
@@ -228,7 +223,7 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-08-09 18:46" pubdate>
+        <time datetime="2024-08-09 21:10" pubdate>
           August 9, 2024 pm
         </time>
       </span>
@@ -240,7 +235,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          210 words
+          18 words
         
       </span>
     
@@ -251,7 +246,7 @@
         
         
         
-          2 mins
+          1 mins
         
       </span>
     
@@ -297,35 +292,24 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server</h1>
+            <h1 id="seo-header">Hello World</h1>
             
             
               <div class="markdown-body">
                 
-                <h1 id="Deploy-BEVFormer-on-Ubuntu-18-04-22-04"><a href="#Deploy-BEVFormer-on-Ubuntu-18-04-22-04" class="headerlink" title="Deploy BEVFormer on Ubuntu 18.04&#x2F;22.04"></a>Deploy BEVFormer on Ubuntu 18.04&#x2F;22.04</h1><hr>
-<blockquote>
-<p><em>This is a 100% successful instruction for deploying BEVFormer&#x2F;ActFormer on Ubuntu 18.04&#x2F;22.04.</em></p>
-</blockquote>
-<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>For those who wanna do experiments with BEVFormer and are still struggling to configure the environment on Ubuntu 18.04&#x2F;20.04, congradulate you finally find the right place! There may be some strange reasons leading to the failure in running BEVFormer, however, you will make it after following the instructions below.</p>
-<p><strong>The key points are highlighted here:</strong></p>
-<ul>
-<li><input checked="" disabled="" type="checkbox"> Please ensure the <strong>running</strong> cuda version is <strong>11.3</strong>  </li>
-<li><input checked="" disabled="" type="checkbox"> Please ensure the gcc version is higher than <strong>4.0</strong> but lower than <strong>8.0</strong></li>
-<li><input checked="" disabled="" type="checkbox"> Please use mmcv-full higher than <strong>1.3</strong> but lower than <strong>1.4</strong></li>
-</ul>
-<h2 id="Preparation"><a href="#Preparation" class="headerlink" title="Preparation"></a>Preparation</h2><h4 id="1-Create-virtual-environment"><a href="#1-Create-virtual-environment" class="headerlink" title="1. Create virtual environment"></a>1. Create virtual environment</h4><figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss">conda <span class="hljs-keyword">create</span> -n <span class="hljs-keyword">open</span>-mmlab python=<span class="hljs-number">3.8</span> -y  <br>conda activate <span class="hljs-keyword">open</span>-mmlab<br></code></pre></td></tr></table></figure>
-<h4 id="2-Install-GPU-version-Pytorch"><a href="#2-Install-GPU-version-Pytorch" class="headerlink" title="2. Install GPU-version Pytorch"></a>2. Install GPU-version Pytorch</h4><p><strong>Method 1:</strong></p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pip</span> install torch==<span class="hljs-number">1</span>.<span class="hljs-number">10</span>.<span class="hljs-number">0</span>+cu113 torchvision==<span class="hljs-number">0</span>.<span class="hljs-number">11</span>.<span class="hljs-number">0</span>+cu113 torchaudio==<span class="hljs-number">0</span>.<span class="hljs-number">10</span>.<span class="hljs-number">0</span> -f https://download.pytorch.org/whl/torch_stable.html<br></code></pre></td></tr></table></figure>
-<p><strong>Method 2:</strong></p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">conda</span> install pytorch==<span class="hljs-number">1</span>.<span class="hljs-number">10</span>.<span class="hljs-number">0</span> torchvision==<span class="hljs-number">0</span>.<span class="hljs-number">11</span>.<span class="hljs-number">0</span> torchaudio==<span class="hljs-number">0</span>.<span class="hljs-number">10</span>.<span class="hljs-number">0</span> cudatoolkit=<span class="hljs-number">11</span>.<span class="hljs-number">3</span> -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/linux-<span class="hljs-number">64</span>/<br></code></pre></td></tr></table></figure>
-<h4 id="3-Install-mmcv-full-mmdet-and-mmsegmentation"><a href="#3-Install-mmcv-full-mmdet-and-mmsegmentation" class="headerlink" title="3. Install mmcv-full, mmdet, and mmsegmentation"></a>3. Install mmcv-full, mmdet, and mmsegmentation</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pip</span> install mmcv-full==<span class="hljs-number">1</span>.<span class="hljs-number">4</span>.<span class="hljs-number">0</span> -f https://download.openmmlab.com/mmcv/dist/cu113/torch1.<span class="hljs-number">10</span>.<span class="hljs-number">0</span>/index.html<br><span class="hljs-attribute">pip</span> install mmdet==<span class="hljs-number">2</span>.<span class="hljs-number">14</span>.<span class="hljs-number">0</span> mmsegmentation==<span class="hljs-number">0</span>.<span class="hljs-number">14</span>.<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
-<h4 id="4-Install-Dependency"><a href="#4-Install-Dependency" class="headerlink" title="4. Install Dependency"></a>4. Install Dependency</h4><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pip</span> install ninja tensorboard==<span class="hljs-number">2</span>.<span class="hljs-number">13</span>.<span class="hljs-number">0</span> nuscenes-devkit==<span class="hljs-number">1</span>.<span class="hljs-number">1</span>.<span class="hljs-number">10</span> scikit-image==<span class="hljs-number">0</span>.<span class="hljs-number">19</span>.<span class="hljs-number">0</span> lyft-dataset-sdk==<span class="hljs-number">0</span>.<span class="hljs-number">0</span>.<span class="hljs-number">8</span><br><span class="hljs-attribute">pip</span> install numpy==<span class="hljs-number">1</span>.<span class="hljs-number">19</span>.<span class="hljs-number">5</span> pandas==<span class="hljs-number">1</span>.<span class="hljs-number">4</span>.<span class="hljs-number">4</span> llvmlite==<span class="hljs-number">0</span>.<span class="hljs-number">31</span>.<span class="hljs-number">0</span> setuptools==<span class="hljs-number">59</span>.<span class="hljs-number">5</span>.<span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
-<h4 id="5-Set-CUDA-Path-Important"><a href="#5-Set-CUDA-Path-Important" class="headerlink" title="5. Set CUDA Path (Important)"></a>5. Set CUDA Path (Important)</h4><p><strong>Exit current environment</strong></p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">conda deactivate</span><br></code></pre></td></tr></table></figure>
-<p><strong>Download and intall CUDA 11.3 (assume you are not root user)</strong></p>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">wget</span> https://developer.download.nvidia.com/compute/cuda/<span class="hljs-number">11</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>/local_installers/cuda_11.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>_465.<span class="hljs-number">19</span>.<span class="hljs-number">01</span>_linux.run<br><span class="hljs-attribute">sh</span> cuda_11.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>_465.<span class="hljs-number">19</span>.<span class="hljs-number">01</span>_linux.run<br></code></pre></td></tr></table></figure>
-<p><strong>Wait until interface appears (ignore the wrong version below, yours should be 11.3)</strong><br><img src="/blog/images/image.png" srcset="/blog/img/loading.gif" lazyload alt="alt text"><br><strong>Accept and continue</strong><br><img src="/blog/images/image-1.png" srcset="/blog/img/loading.gif" lazyload alt="alt text"><br><strong>Cancel the first option (press enter), and select options, modify the cuda installation path to yours, otherwise you don’t have enough permission</strong><br><img src="/blog/images/image-2.png" srcset="/blog/img/loading.gif" lazyload alt="alt text"><br><strong>Set CUDA path</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># Switch CUDA version when activate open-mmlab</span><br><span class="hljs-built_in">mkdir</span> -p /home/[username]/anaconda3/envs/open-mmlab/etc/conda/activate.d<br>vim /home/[username]/anaconda3/envs/open-mmlab/etc/conda/activate.d/activate.sh<br><br><span class="hljs-comment"># Insert following content</span><br>ORIGINAL_CUDA_HOME=<span class="hljs-variable">$CUDA_HOME</span><br>ORIGINAL_LD_LIBRARY_PATH=<span class="hljs-variable">$LD_LIBRARY_PATH</span><br><span class="hljs-built_in">export</span> CUDA_HOME=[your installed cuda path]/cuda-11.3<br><span class="hljs-built_in">export</span> LD_LIBRARY_PATH=<span class="hljs-variable">$CUDA_HOME</span>/lib64:<span class="hljs-variable">$LD_LIBRARY_PATH</span><br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$CUDA_HOME</span>/bin:<span class="hljs-variable">$PATH</span><br></code></pre></td></tr></table></figure>
+                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo new <span class="hljs-string">&quot;My New Post&quot;</span><br></code></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo server<br></code></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo generate<br></code></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">$ hexo deploy<br></code></pre></td></tr></table></figure>
+
+<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
                 
               </div>
@@ -334,34 +318,6 @@
             <div>
               <div class="post-metas my-3">
   
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/blog/categories/Technology/" class="category-chain-item">Technology</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
-  
-  
-    <div class="post-meta">
-      <i class="iconfont icon-tags"></i>
-      
-        <a href="/blog/tags/Code/" class="print-no-link">#Code</a>
-      
-    </div>
   
 </div>
 
@@ -371,8 +327,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server</div>
-      <div>http://yihangtao.github.io/blog/2024/08/09/bevformer/</div>
+      <div>Hello World</div>
+      <div>http://yihangtao.github.io/blog/2024/08/09/hello-world/</div>
     </div>
     <div class="license-meta">
       
@@ -416,18 +372,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/blog/2024/08/09/hello-world/" title="Hello World">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">Hello World</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/blog/2024/08/09/Hello%20Blog/" title="Yihang Tao open his blog today!">
-                        <span class="hidden-mobile">Yihang Tao open his blog today!</span>
+                      <a href="/blog/2024/08/09/bevformer/" title="100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server">
+                        <span class="hidden-mobile">100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server</span>
                         <span class="visible-mobile">Next</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
