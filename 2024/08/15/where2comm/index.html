@@ -1,0 +1,732 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/blog/img/fluid.png">
+  <link rel="icon" href="/blog/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yihang Tao">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Implement Where2comm with V2X-Sim-2 dataset Author: Yihang Tao  Where2comm published its code implementation with DAIR-V2X dataset, while has not yet released code working on V2X-Sim-2 dataset.  Intro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to let Where2comm work on V2X-Sim-2 dataset?">
+<meta property="og:url" content="http://yihangtao.github.io/blog/2024/08/15/where2comm/index.html">
+<meta property="og:site_name" content="Yihang Tao">
+<meta property="og:description" content="Implement Where2comm with V2X-Sim-2 dataset Author: Yihang Tao  Where2comm published its code implementation with DAIR-V2X dataset, while has not yet released code working on V2X-Sim-2 dataset.  Intro">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-08-15T11:42:21.000Z">
+<meta property="article:modified_time" content="2024-08-15T14:24:04.777Z">
+<meta property="article:author" content="Yihang Tao">
+<meta property="article:tag" content="Code">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>How to let Where2comm work on V2X-Sim-2 dataset? - Yihang Tao</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/blog/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/blog/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/blog/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yihangtao.github.io","root":"/blog/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"HQiYfVsQkEO2GlrJzzk0znqA-MdYXbMMI","app_key":"FBUcht9Wh1aaKnyG10BQlihX","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/blog/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/blog/js/utils.js" ></script>
+  <script  src="/blog/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/blog/">
+      <strong>Yihang Tao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/blog/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/blog/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="How to let Where2comm work on V2X-Sim-2 dataset?"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-08-15 19:42" pubdate>
+          August 15, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          329 words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          3 mins
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> views
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">How to let Where2comm work on V2X-Sim-2 dataset?</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Implement-Where2comm-with-V2X-Sim-2-dataset"><a href="#Implement-Where2comm-with-V2X-Sim-2-dataset" class="headerlink" title="Implement Where2comm with V2X-Sim-2 dataset"></a>Implement Where2comm with V2X-Sim-2 dataset</h1><hr>
+<p><strong>Author: Yihang Tao</strong></p>
+<blockquote>
+<p><em>Where2comm published its code implementation with DAIR-V2X dataset, while has not yet released code working on V2X-Sim-2 dataset.</em></p>
+</blockquote>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Where2comm</strong> (<em>Hu et al., Neurips 2022</em>), a classic and milestone-like collaborative perception method, has only open its code implementation on DAIR-V2X dataset. However, there is only one ego vehicle in DAIR-V2X dataset, for those who wanna do experiments with multi-vehicle collaborative perception dataset (e.g., V2X-Sim-2 datset) and take Where2comm as baseline, it’s still not convenient enough to realize. This article will introduce a method to smoothly train&#x2F;test Where2comm model on V2X-Sim-2 dataset.</p>
+<p><strong>The key points are highlighted here:</strong></p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Download <a target="_blank" rel="noopener" href="https://github.com/MediaBrain-SJTU/Where2comm?tab=readme-ov-file">Where2comm</a> as main project.</li>
+<li><input checked="" disabled="" type="checkbox"> Download <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL">HEAL</a> as auxiliary project.</li>
+<li><input checked="" disabled="" type="checkbox"> Download <a target="_blank" rel="noopener" href="https://ai4ce.github.io/V2X-Sim/">V2X-Sim-2</a> dataset.</li>
+</ul>
+<h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><h4 id="1-Merge-HEAL-and-Where2comm"><a href="#1-Merge-HEAL-and-Where2comm" class="headerlink" title="1. Merge HEAL and Where2comm"></a>1. Merge HEAL and Where2comm</h4><p>Download HEAL and Where2comm</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/MediaBrain-SJTU/Where2comm.git<br>cd Where2comm<br>git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/yifanlu0227/HEAL.git<br></code></pre></td></tr></table></figure>
+<p>Substitute tools, utils, and visualization</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> -rf opencood/tools<br><span class="hljs-built_in">rm</span> -rf opencood/utils<br><span class="hljs-built_in">rm</span> -rf opencood/visualization<br><span class="hljs-built_in">cp</span> -r HEAL/opencood/tools/ opencood/tools<br><span class="hljs-built_in">cp</span> -r HEAL/opencood/utils/ opencood/utils<br><span class="hljs-built_in">cp</span> -r HEAL/opencood/visualization/ opencood/visualization<br></code></pre></td></tr></table></figure>
+<p>Create a new directory and download complement .yaml file.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">mkdir</span> opencood/hypes_yaml/v2xsim2<br>wget https://github.com/yihangtao/Where2comm-V2X-Sim/blob/main/Where2comm/opencood/hypes_yaml/v2xsim2/v2xsim2_where2comm_attn_multiscale_resnet.yaml<br><span class="hljs-built_in">mv</span> v2xsim2_where2comm_attn_multiscale_resnet.yaml opencood/hypes_yaml/v2xsim2/v2xsim2_where2comm_attn_multiscale_resnet.yaml<br></code></pre></td></tr></table></figure>
+
+<p>Modify opencood&#x2F;data_utils&#x2F;datasets of Where2comm.</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs awk">rm -rf opencood<span class="hljs-regexp">/data_utils/</span>datasets/__init__.py<br>cp HEAL<span class="hljs-regexp">/opencood/</span>data_utils<span class="hljs-regexp">/datasets/</span>__init__.py opencood<span class="hljs-regexp">/data_utils/</span>datasets/<br>cp HEAL<span class="hljs-regexp">/opencood/</span>data_utils<span class="hljs-regexp">/datasets/</span>basedataset<span class="hljs-regexp">/v2xsim_basedataset.py opencood/</span>data_utils<span class="hljs-regexp">/datasets/</span><br>cp HEAL<span class="hljs-regexp">/opencood/</span>data_utils<span class="hljs-regexp">/datasets/i</span>ntermediate_fusion_dataset.py opencood<span class="hljs-regexp">/data_utils/</span>datasets/<br></code></pre></td></tr></table></figure>
+
+<p>Modify install requirements of Where2comm.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">rm</span> -rf requirements.txt<br><span class="hljs-built_in">cp</span> HEAL/requirements.txt ./<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-Environment-setup"><a href="#2-Environment-setup" class="headerlink" title="2. Environment setup"></a>2. Environment setup</h4><p>Install cuda 11.1 and customize installation path (see <a href="https://yihangtao.github.io/blog/2024/08/09/bevformer/#5-Set-CUDA-Path-Important">Set CUDA Path</a> for more details).</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs elixir">conda create --name <span class="hljs-title class_">Where2comm</span> python=<span class="hljs-number">3.7</span> cmake=<span class="hljs-number">3.22</span>.<span class="hljs-number">1</span> cudatoolkit=<span class="hljs-number">11.2</span> cudatoolkit-dev=<span class="hljs-number">11.2</span><br>conda activate <span class="hljs-title class_">Where2comm</span><br>conda install cudnn -c conda-forge<br>conda install boost<br><span class="hljs-comment"># install pytorch</span><br>pip install torch==<span class="hljs-number">1.10</span>.<span class="hljs-number">1</span>+cu111 torchvision==<span class="hljs-number">0.11</span>.<span class="hljs-number">2</span>+cu111 torchaudio==<span class="hljs-number">0.10</span>.<span class="hljs-number">1</span> -f <span class="hljs-symbol">https:</span>//download.pytorch.org/whl/torch_stable.html<br><br><span class="hljs-comment"># option: if there is error or speed issues in install cudatoolkit</span><br><span class="hljs-comment"># could instead specify the PATH, CUDA_HOME, and LD_LIBRARY_PATH, using current cuda</span><br><span class="hljs-comment"># write it to ~/.bashrc, for example use Vim</span><br>vim ~/.bashrc<br>export <span class="hljs-title class_">PATH</span>=[your cuda path]/<span class="hljs-symbol">bin:</span><span class="hljs-variable">$PATH</span><br>export <span class="hljs-title class_">CUDA_HOME</span>=[your cuda path]/<span class="hljs-symbol">bin:</span><span class="hljs-variable">$CUDA_HOME</span><br>export <span class="hljs-title class_">LD_LIBRARY_PATH</span>=[your cuda path]/<span class="hljs-symbol">lib64:</span><span class="hljs-variable">$LD_LIBRARY_PATH</span><br><br><span class="hljs-comment"># add head file search directories </span><br>export <span class="hljs-title class_">C_INCLUDE_PATH</span>=<span class="hljs-variable">$C_INCLUDE_PATH</span><span class="hljs-symbol">:/miniconda3/envs/Where2comm/include</span><br>export <span class="hljs-title class_">CPLUS_INCLUDE_PATH</span>=<span class="hljs-variable">$CPLUS_INCLUDE_PATH</span><span class="hljs-symbol">:/miniconda3/envs/Where2comm/include</span><br><span class="hljs-comment"># add shared library searching directories</span><br>export <span class="hljs-title class_">LIBRARY_PATH</span>=<span class="hljs-variable">$LIBRARY_PATH</span><span class="hljs-symbol">:/miniconda3/envs/Where2comm/lib</span><br><span class="hljs-comment"># add runtime library searching directories</span><br>export <span class="hljs-title class_">LD_LIBRARY_PATH</span>=<span class="hljs-variable">$LD_LIBRARY_PATH</span><span class="hljs-symbol">:/miniconda3/envs/Where2comm/lib</span><br><br><span class="hljs-comment"># go out of Vim and activate it in current shell</span><br>source ~/.bashrc<br><br>conda activate <span class="hljs-title class_">Where2comm</span><br><br><span class="hljs-comment"># clone spconv:</span><br>git clone <span class="hljs-symbol">https:</span>//github.com/traveller59/spconv.git <br>cd spconv<br>git checkout v1.<span class="hljs-number">2.1</span><br>git submodule update --init --recursive<br><br><span class="hljs-comment"># compile</span><br>python setup.py bdist_wheel<br><br><span class="hljs-comment"># install</span><br>cd ./dist<br>pip install spconv<span class="hljs-number">-1.2</span>.<span class="hljs-number">1</span>-cp37-cp37m-linux_x86_64.whl<br><br><span class="hljs-comment"># check if is successfully installed</span><br>python <br><span class="hljs-keyword">import</span> spconv<br></code></pre></td></tr></table></figure>
+
+
+<h4 id="3-Install-OpenCOOD"><a href="#3-Install-OpenCOOD" class="headerlink" title="3. Install OpenCOOD"></a>3. Install OpenCOOD</h4><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-comment"># install requirements</span><br>pip install -r requirements.txt<br>python setup.py develop<br><br>python opencood<span class="hljs-regexp">/utils/</span>setup.py build_ext --inplace<br>python opencood<span class="hljs-regexp">/pcdet_utils/</span>setup.py build_ext --inplace<br><span class="hljs-comment"># if there is cuda version issue; ssh db92 -p 58122 and customize the cuda home</span><br>CUDA_HOME=<span class="hljs-regexp">/usr/</span>local<span class="hljs-regexp">/cuda-11.1/</span> python opencood<span class="hljs-regexp">/pcdet_utils/</span>setup.py build_ext --inplace<br></code></pre></td></tr></table></figure>
+
+<h4 id="4-Prepare-V2X-Sim-2-dataset"><a href="#4-Prepare-V2X-Sim-2-dataset" class="headerlink" title="4. Prepare V2X-Sim-2 dataset"></a>4. Prepare V2X-Sim-2 dataset</h4><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs smali">mkdir dataset<br><br>Where2comm/dataset<br><span class="hljs-keyword">.</span> <br>├── v2xsim2-complete<br>│   ├── lidarseg<br>│   ├── maps<br>│   ├── sweeps<br>│   └── v1.0-mini<br>└── v2xsim2_info<br>    ├── v2xsim_infos_test.pkl<br>    ├── v2xsim_infos_train.pkl<br>    └── v2xsim_infos_val.pkl<br></code></pre></td></tr></table></figure>
+
+<h4 id="5-Basic-Train-Test-Command"><a href="#5-Basic-Train-Test-Command" class="headerlink" title="5. Basic Train &#x2F; Test Command"></a>5. Basic Train &#x2F; Test Command</h4><p>Please refer to <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL?tab=readme-ov-file#basic-train--test-command">Commands</a> for more details.</p>
+<p>Training process (Terminal)</p>
+
+<p>Sampled visualization results (opencood&#x2F;logs&#x2F;)</p>
+
+
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you wanna directly download the processed project (<strong>skip step 1</strong>), please visit <a target="_blank" rel="noopener" href="https://github.com/yihangtao/Where2comm-V2X-Sim">Where2comm+V2X-Sim</a>.</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL?tab=readme-ov-file">https://github.com/yifanlu0227/HEAL?tab=readme-ov-file</a><br>[2] <a target="_blank" rel="noopener" href="https://github.com/MediaBrain-SJTU/Where2comm/tree/main">https://github.com/MediaBrain-SJTU/Where2comm/tree/main</a><br>[3] <a target="_blank" rel="noopener" href="https://ai4ce.github.io/V2X-Sim/">https://ai4ce.github.io/V2X-Sim/</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/blog/categories/Technology/" class="category-chain-item">Technology</a>
+  
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/blog/tags/Code/" class="print-no-link">#Code</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>How to let Where2comm work on V2X-Sim-2 dataset?</div>
+      <div>http://yihangtao.github.io/blog/2024/08/15/where2comm/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yihang Tao</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 15, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/blog/2024/08/09/bevformer/" title="100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server">
+                        <span class="hidden-mobile">100% successful deployment of BEVFormer on Ubuntu 18.04/20.04 Server</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        Views: 
+        <span id="leancloud-site-pv"></span>
+        
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        Visitors: 
+        <span id="leancloud-site-uv"></span>
+        
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/blog/js/events.js" ></script>
+<script  src="/blog/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/blog/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/blog/js/leancloud.js" ></script>
+
+  <script  src="/blog/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/blog/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
