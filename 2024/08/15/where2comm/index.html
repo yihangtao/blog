@@ -26,11 +26,14 @@
 <meta property="og:site_name" content="Yihang Tao">
 <meta property="og:description" content="Implement Where2comm with V2X-Sim-2 dataset Author: Yihang Tao  Where2comm published its code implementation with DAIR-V2X dataset, while has not yet released code working on V2X-Sim-2 dataset.  Intro">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yihangtao.github.io/blog/.io//2024/08/15/where2comm/image.png">
+<meta property="og:image" content="http://yihangtao.github.io/blog/.io//2024/08/15/where2comm/image-1.png">
 <meta property="article:published_time" content="2024-08-15T11:42:21.000Z">
 <meta property="article:modified_time" content="2024-08-15T15:45:37.822Z">
 <meta property="article:author" content="Yihang Tao">
 <meta property="article:tag" content="Code">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://yihangtao.github.io/blog/.io//2024/08/15/where2comm/image.png">
   
   
   
@@ -306,9 +309,9 @@
 <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p><strong>Where2comm</strong> (<em>Hu et al., Neurips 2022</em>), a classic and milestone-like collaborative perception method, has only open its code implementation on DAIR-V2X dataset. However, there is only one ego vehicle in DAIR-V2X dataset, for those who wanna do experiments with multi-vehicle collaborative perception dataset (e.g., V2X-Sim-2 datset) and take Where2comm as baseline, it’s still not convenient enough to realize. This article will introduce a method to smoothly train&#x2F;test Where2comm model on V2X-Sim-2 dataset.</p>
 <p><strong>The key points are highlighted here:</strong></p>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> Download <a target="_blank" rel="noopener" href="https://github.com/MediaBrain-SJTU/Where2comm?tab=readme-ov-file">Where2comm</a> as main project.</li>
-<li><input checked="" disabled="" type="checkbox"> Download <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL">HEAL</a> as auxiliary project.</li>
-<li><input checked="" disabled="" type="checkbox"> Download <a target="_blank" rel="noopener" href="https://ai4ce.github.io/V2X-Sim/">V2X-Sim-2</a> dataset.</li>
+<li><input checked disabled type="checkbox"> Download <a target="_blank" rel="noopener" href="https://github.com/MediaBrain-SJTU/Where2comm?tab=readme-ov-file">Where2comm</a> as main project.</li>
+<li><input checked disabled type="checkbox"> Download <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL">HEAL</a> as auxiliary project.</li>
+<li><input checked disabled type="checkbox"> Download <a target="_blank" rel="noopener" href="https://ai4ce.github.io/V2X-Sim/">V2X-Sim-2</a> dataset.</li>
 </ul>
 <h2 id="Steps"><a href="#Steps" class="headerlink" title="Steps"></a>Steps</h2><h4 id="1-Merge-HEAL-and-Where2comm"><a href="#1-Merge-HEAL-and-Where2comm" class="headerlink" title="1. Merge HEAL and Where2comm"></a>1. Merge HEAL and Where2comm</h4><p>Download HEAL and Where2comm</p>
 <figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/MediaBrain-SJTU/Where2comm.git<br>cd Where2comm<br>git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/yifanlu0227/HEAL.git<br></code></pre></td></tr></table></figure>
@@ -333,9 +336,9 @@
 
 <h4 id="5-Basic-Train-Test-Command"><a href="#5-Basic-Train-Test-Command" class="headerlink" title="5. Basic Train &#x2F; Test Command"></a>5. Basic Train &#x2F; Test Command</h4><p>Please refer to <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL?tab=readme-ov-file#basic-train--test-command">Commands</a> for more details.</p>
 <p>Training process (Terminal)</p>
-
+<img src="/blog/.io//2024/08/15/where2comm/image.png" srcset="/blog/img/loading.gif" lazyload class title="alt text">
 <p>Sampled visualization results (opencood&#x2F;logs&#x2F;)</p>
-
+<img src="/blog/.io//2024/08/15/where2comm/image-1.png" srcset="/blog/img/loading.gif" lazyload class title="alt text">
 
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you wanna directly download the processed project (<strong>skip step 1</strong>), please visit <a target="_blank" rel="noopener" href="https://github.com/yihangtao/Where2comm-V2X-Sim">Where2comm+V2X-Sim</a>.</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>[1] <a target="_blank" rel="noopener" href="https://github.com/yifanlu0227/HEAL?tab=readme-ov-file">https://github.com/yifanlu0227/HEAL?tab=readme-ov-file</a><br>[2] <a target="_blank" rel="noopener" href="https://github.com/MediaBrain-SJTU/Where2comm/tree/main">https://github.com/MediaBrain-SJTU/Where2comm/tree/main</a><br>[3] <a target="_blank" rel="noopener" href="https://ai4ce.github.io/V2X-Sim/">https://ai4ce.github.io/V2X-Sim/</a></p>
